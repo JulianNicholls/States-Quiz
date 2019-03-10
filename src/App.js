@@ -8,6 +8,8 @@ class App extends Component {
         <header className="App-header">
           <h1>What state am I in?</h1>
         </header>
+
+        <img src="images/states-map.png" alt="" />
       </div>
     );
   }
