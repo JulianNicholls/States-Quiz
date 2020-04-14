@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import ClickableImage from './components/ClickableImage';
+import PositionsTable from './components/PositionsTable';
 
 const App = () => {
-  const [positions, setPositions] = useState<Array<Point2D>>([]);
+  const [positions, setPositions] = useState<Array<MapPosition>>([]);
 
-  const savePosition = (pos: Point2D) => {
-    setPositions([...positions, { x: Math.round(pos.x), y: Math.round(pos.y) }]);
-    console.log({ pos });
+  useEffect(() => {
+    const lsPos = localStorage.sqPos;
+
+    if (lsPos) setPositions(JSON.parse(lsPos));
+  }, []);
+
+  const savePosition = (pos: MapPosition) => {
+    const updated = [...positions, pos];
+
+    setPositions(updated);
+    localStorage.setItem('sqPos', JSON.stringify(updated));
   };
 
   return (
@@ -16,17 +25,18 @@ const App = () => {
         <h1>What state am I in?</h1>
       </header>
 
-      <ClickableImage
-        src="images/exported-877.png"
-        alt="USA States Map"
-        savePosition={savePosition}
-      />
+      <main>
+        <div>
+          <ClickableImage
+            src="images/exported-877.png"
+            alt="USA States Map"
+            positions={positions}
+            savePosition={savePosition}
+          />
+        </div>
 
-      {positions.map(({ x, y }) => (
-        <span>
-          x: {x}, y: {y},{' '}
-        </span>
-      ))}
+        <PositionsTable positions={positions} />
+      </main>
     </div>
   );
 };
