@@ -31,7 +31,7 @@ const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
         }
         onClick={() => {
           setPos({ ...pos, x: mousePos.x, y: mousePos.y });
-          inputRef!.current!.focus();
+          inputRef.current.focus();
         }}
       />
 

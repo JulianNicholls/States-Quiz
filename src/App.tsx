@@ -9,7 +9,12 @@ const App = () => {
   useEffect(() => {
     const lsPos = localStorage.sqPos;
 
-    if (lsPos) setPositions(JSON.parse(lsPos));
+    if (lsPos) {
+      const loaded = JSON.parse(lsPos);
+
+      loaded.sort((a: MapPosition, b: MapPosition) => (a.name < b.name ? -1 : 1));
+      setPositions(loaded);
+    }
   }, []);
 
   const savePosition = (pos: MapPosition) => {
