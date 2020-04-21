@@ -12,13 +12,23 @@ const App = () => {
     if (lsPos) {
       const loaded = JSON.parse(lsPos);
 
-      loaded.sort((a: MapPosition, b: MapPosition) => (a.name < b.name ? -1 : 1));
+      loaded.sort((a: MapPosition, b: MapPosition) =>
+        a.name.localeCompare(b.name)
+      );
       setPositions(loaded);
     }
   }, []);
 
   const savePosition = (pos: MapPosition) => {
-    const updated = [...positions, pos];
+    const found = positions.findIndex(
+      (p) => p.name === pos.name || (p.x === pos.x && p.y === pos.y)
+    );
+    let updated;
+
+    if (found) {
+      updated = [...positions];
+      updated[found] = pos;
+    } else updated = [...positions, pos];
 
     setPositions(updated);
     localStorage.setItem('sqPos', JSON.stringify(updated));

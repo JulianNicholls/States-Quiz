@@ -9,10 +9,11 @@ interface CIProps {
 
 const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
   const imgRef = useRef(null);
+  const inputRef = useRef(null);
   const [rect, setRect] = useState<ClientRect>();
   const [mousePos, setMousePos] = useState<MapPosition>({ x: 0, y: 0, name: '' });
   const [pos, setPos] = useState<MapPosition>({ x: 0, y: 0, name: '' });
-  const inputRef = useRef(null);
+  const [selected, setSelected] = useState<number>(-1);
 
   useEffect(() => {
     if (imgRef && imgRef.current) setRect(imgRef.current.getBoundingClientRect());
@@ -23,22 +24,32 @@ const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
       <img
         src={src}
         alt={alt || 'Clickable Image'}
-        onMouseMove={(e) =>
-          setMousePos({
-            x: Math.round(e.clientX - rect.left),
-            y: Math.round(e.clientY - rect.top),
-          })
-        }
+        onMouseMove={(e) => {
+          const [x, y] = [
+            Math.round(e.clientX - rect.left),
+            Math.round(e.clientY - rect.top),
+          ];
+
+          setMousePos({ x, y });
+
+          positions.forEach((pos, index) => {
+            if (Math.abs(pos.x - x) < 6 && Math.abs(pos.y - y) < 6) {
+              console.log(index);
+              setSelected(index);
+              setPos({ ...pos, x, y });
+            }
+          });
+        }}
         onClick={() => {
           setPos({ ...pos, x: mousePos.x, y: mousePos.y });
           inputRef.current.focus();
         }}
       />
 
-      {positions.map(({ x, y }) => (
+      {positions.map(({ x, y }, index) => (
         <div
           key={`${x}${y}`}
-          className="spot"
+          className={index === selected ? 'spot selected' : 'spot'}
           style={{ top: y + 'px', left: x + 'px' }}
         ></div>
       ))}
@@ -57,7 +68,7 @@ const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
           x: {pos.x}, y: {pos.y}
         </span>
         <br />
-        <label htmlFor="state">State</label>
+        <label htmlFor="state">State Name:</label>
         <input
           ref={inputRef}
           type="text"
