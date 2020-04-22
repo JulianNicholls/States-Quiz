@@ -58,7 +58,7 @@ input {
   display: block;
   border: 1px solid #888;
   border-collapse: collapse;
-  width: 300px;
+  width: 450px;
   margin-right: 1rem;
   max-height: 92vh;
   overflow-y: scroll;
@@ -71,7 +71,7 @@ input {
 }
 
 td.name {
-  width: 170px;
+  width: 160px;
 }
 
 td.numeric {
@@ -87,6 +87,7 @@ td.numeric {
   width: 8px;
   height: 8px;
   border-radius: 5px;
+  transform: translate(-2px, -2px)
 }
 
 .spot.selected {

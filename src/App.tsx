@@ -12,20 +12,17 @@ const App = () => {
     if (lsPos) {
       const loaded = JSON.parse(lsPos);
 
-      loaded.sort((a: MapPosition, b: MapPosition) =>
-        a.name.localeCompare(b.name)
-      );
       setPositions(loaded);
     }
   }, []);
 
   const savePosition = (pos: MapPosition) => {
     const found = positions.findIndex(
-      (p) => p.name === pos.name || (p.x === pos.x && p.y === pos.y)
+      (p) => p.state === pos.state || (p.x === pos.x && p.y === pos.y)
     );
     let updated;
 
-    if (found) {
+    if (found !== -1) {
       updated = [...positions];
       updated[found] = pos;
     } else updated = [...positions, pos];

@@ -4,5 +4,6 @@ interface Point2D {
 }
 
 interface MapPosition extends Point2D {
-  name?: string;
+  state?: string;
+  capital?: string;
 }

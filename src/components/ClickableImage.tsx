@@ -7,43 +7,59 @@ interface CIProps {
   savePosition: (pos: MapPosition) => void;
 }
 
+interface XYPos {
+  x: number;
+  y: number;
+}
+
+const emptyPosition: XYPos = { x: 0, y: 0 };
+
 const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
   const imgRef = useRef(null);
   const inputRef = useRef(null);
   const [rect, setRect] = useState<ClientRect>();
-  const [mousePos, setMousePos] = useState<MapPosition>({ x: 0, y: 0, name: '' });
-  const [pos, setPos] = useState<MapPosition>({ x: 0, y: 0, name: '' });
+  const [mousePos, setMousePos] = useState<XYPos>(emptyPosition);
+  const [pos, setPos] = useState<XYPos>(emptyPosition);
+  const [stateName, setStateName] = useState<string>('');
+  const [capital, setCapital] = useState<string>('');
   const [selected, setSelected] = useState<number>(-1);
 
   useEffect(() => {
     if (imgRef && imgRef.current) setRect(imgRef.current.getBoundingClientRect());
   }, [imgRef]);
 
+  const onMove = (e: React.MouseEvent<HTMLImageElement>) => {
+    const x = Math.round(e.clientX - rect.left);
+    const y = Math.round(e.clientY - rect.top);
+
+    setMousePos({ x, y });
+  };
+
+  const onClick = () => {
+    const { x, y } = mousePos;
+
+    setPos({ x, y });
+
+    positions.forEach((p, index) => {
+      if (Math.abs(p.x - x) < 10 && Math.abs(p.y - y) < 10) {
+        console.log(index);
+        setSelected(index);
+        setPos({ x, y });
+        setStateName(p.state);
+        setCapital(p.capital || '');
+      }
+    });
+
+    inputRef.current.focus();
+  };
+
   return (
     <div className="positioned" ref={imgRef}>
       <img
         src={src}
         alt={alt || 'Clickable Image'}
-        onMouseMove={(e) => {
-          const [x, y] = [
-            Math.round(e.clientX - rect.left),
-            Math.round(e.clientY - rect.top),
-          ];
-
-          setMousePos({ x, y });
-
-          positions.forEach((pos, index) => {
-            if (Math.abs(pos.x - x) < 6 && Math.abs(pos.y - y) < 6) {
-              console.log(index);
-              setSelected(index);
-              setPos({ ...pos, x, y });
-            }
-          });
-        }}
-        onClick={() => {
-          setPos({ ...pos, x: mousePos.x, y: mousePos.y });
-          inputRef.current.focus();
-        }}
+        onMouseMove={onMove}
+        onClick={onClick}
       />
 
       {positions.map(({ x, y }, index) => (
@@ -58,9 +74,11 @@ const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
         onSubmit={(e) => {
           e.preventDefault();
 
-          if (pos.x > 0 && pos.y > 0 && pos.name !== '') {
-            savePosition(pos);
-            setPos({ x: 0, y: 0, name: '' });
+          if (pos.x > 0 && pos.y > 0 && stateName !== '') {
+            savePosition({ x: pos.x, y: pos.y, state: stateName, capital });
+            setPos(emptyPosition);
+            setStateName('');
+            setCapital('');
           }
         }}
       >
@@ -74,10 +92,20 @@ const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
           type="text"
           name="state"
           id="state"
-          value={pos.name}
-          onChange={(e) => setPos({ ...pos, name: e.target.value })}
+          value={stateName}
+          onChange={(e) => setStateName(e.target.value)}
         />
-        <button>Add Point</button>
+        <br />
+        <label htmlFor="capital">State Capital:</label>
+        <input
+          type="text"
+          name="capital"
+          id="capital"
+          value={capital}
+          onChange={(e) => setCapital(e.target.value)}
+        />
+        <br />
+        <button style={{ margin: '0.5em 0 0 8em' }}>Add Point</button>
       </form>
     </div>
   );
