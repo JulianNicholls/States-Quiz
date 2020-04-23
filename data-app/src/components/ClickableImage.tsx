@@ -7,19 +7,13 @@ interface CIProps {
   savePosition: (pos: MapPosition) => void;
 }
 
-interface XYPos {
-  x: number;
-  y: number;
-}
-
-const emptyPosition: XYPos = { x: 0, y: 0 };
+const emptyPosition: Point2D = { x: 0, y: 0 };
 
 const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
   const imgRef = useRef(null);
   const inputRef = useRef(null);
   const [rect, setRect] = useState<ClientRect>();
-  // const [mousePos, setMousePos] = useState<XYPos>(emptyPosition);
-  const [pos, setPos] = useState<XYPos>(emptyPosition);
+  const [pos, setPos] = useState<Point2D>(emptyPosition);
   const [stateName, setStateName] = useState<string>('');
   const [capital, setCapital] = useState<string>('');
   const [selected, setSelected] = useState<number>(-1);
@@ -28,13 +22,6 @@ const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
     if (imgRef && imgRef.current) setRect(imgRef.current.getBoundingClientRect());
   }, [imgRef]);
 
-  // const onMove = (e: React.MouseEvent<HTMLImageElement>) => {
-  //   const x = Math.round(e.clientX - rect.left);
-  //   const y = Math.round(e.clientY - rect.top);
-
-  //   setMousePos({ x, y });
-  // };
-
   const onClick = (e: React.MouseEvent<Element>) => {
     const x = Math.round(e.clientX - rect.left);
     const y = Math.round(e.clientY - rect.top);
@@ -42,7 +29,7 @@ const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
     setPos({ x, y });
 
     positions.forEach((p, index) => {
-      if (Math.abs(p.x - x) < 10 && Math.abs(p.y - y) < 10) {
+      if (Math.abs(p.x - x) < 6 && Math.abs(p.y - y) < 6) {
         console.log(index);
         setSelected(index);
         setPos({ x, y });
