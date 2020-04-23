@@ -54,6 +54,10 @@ input {
   left: 50px;
 }
 
+.positioned img {
+  cursor: crosshair;
+}
+
 .pos-table {
   display: block;
   border: 1px solid #888;
@@ -87,7 +91,12 @@ td.numeric {
   width: 8px;
   height: 8px;
   border-radius: 5px;
-  transform: translate(-2px, -2px)
+  transform: translate(-2px, -2px);
+  pointer-events: none;   /* Click-through */
+}
+
+.spot.capital {
+  background: green;
 }
 
 .spot.selected {
