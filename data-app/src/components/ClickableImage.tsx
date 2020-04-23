@@ -18,7 +18,7 @@ const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
   const imgRef = useRef(null);
   const inputRef = useRef(null);
   const [rect, setRect] = useState<ClientRect>();
-  const [mousePos, setMousePos] = useState<XYPos>(emptyPosition);
+  // const [mousePos, setMousePos] = useState<XYPos>(emptyPosition);
   const [pos, setPos] = useState<XYPos>(emptyPosition);
   const [stateName, setStateName] = useState<string>('');
   const [capital, setCapital] = useState<string>('');
@@ -28,15 +28,16 @@ const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
     if (imgRef && imgRef.current) setRect(imgRef.current.getBoundingClientRect());
   }, [imgRef]);
 
-  const onMove = (e: React.MouseEvent<HTMLImageElement>) => {
+  // const onMove = (e: React.MouseEvent<HTMLImageElement>) => {
+  //   const x = Math.round(e.clientX - rect.left);
+  //   const y = Math.round(e.clientY - rect.top);
+
+  //   setMousePos({ x, y });
+  // };
+
+  const onClick = (e: React.MouseEvent<Element>) => {
     const x = Math.round(e.clientX - rect.left);
     const y = Math.round(e.clientY - rect.top);
-
-    setMousePos({ x, y });
-  };
-
-  const onClick = () => {
-    const { x, y } = mousePos;
 
     setPos({ x, y });
 
@@ -58,17 +59,24 @@ const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
       <img
         src={src}
         alt={alt || 'Clickable Image'}
-        onMouseMove={onMove}
+        // onMouseMove={onMove}
         onClick={onClick}
       />
 
-      {positions.map(({ x, y }, index) => (
-        <div
-          key={`${x}${y}`}
-          className={index === selected ? 'spot selected' : 'spot'}
-          style={{ top: y + 'px', left: x + 'px' }}
-        ></div>
-      ))}
+      {positions.map(({ x, y, capital }, index) => {
+        let klass = 'spot';
+
+        if (capital) klass += ' capital';
+        if (index === selected) klass += ' selected';
+
+        return (
+          <div
+            key={`${x}${y}`}
+            className={klass}
+            style={{ top: y + 'px', left: x + 'px' }}
+          ></div>
+        );
+      })}
 
       <form
         onSubmit={(e) => {
