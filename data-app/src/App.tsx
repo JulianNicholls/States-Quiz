@@ -34,7 +34,7 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>What state am I in?</h1>
+        <h1>States Data</h1>
       </header>
 
       <main>
