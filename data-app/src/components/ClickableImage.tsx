@@ -58,50 +58,53 @@ const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
         );
       })}
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
+      <div className="form-flex">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
 
-          if (pos.x > 0 && pos.y > 0 && pos.state !== '') {
-            savePosition(pos);
-            setPos({ ...emptyPosition, seq: pos.seq + 1 });
-          }
-        }}
-      >
-        <span>
-          x: {pos.x}, y: {pos.y}
-        </span>
-        <br />
-        <label htmlFor="state">State Name:</label>
-        <input
-          ref={inputRef}
-          type="text"
-          name="state"
-          id="state"
-          value={pos.state}
-          onChange={(e) => setPos({ ...pos, state: e.target.value })}
-        />
-        <br />
-        <label htmlFor="capital">State Capital:</label>
-        <input
-          type="text"
-          name="capital"
-          id="capital"
-          value={pos.capital}
-          onChange={(e) => setPos({ ...pos, capital: e.target.value })}
-        />
-        <br />
-        <label htmlFor="seq">Sequence No.</label>
-        <input
-          type="text"
-          name="seq"
-          id="seq"
-          value={pos.seq}
-          onChange={(e) => setPos({ ...pos, seq: Number(e.target.value) })}
-        />
-        <br />
-        <button style={{ margin: '0.5em 0 0 8em' }}>Add Point</button>
-      </form>
+            if (pos.x > 0 && pos.y > 0 && pos.state !== '') {
+              savePosition(pos);
+              setPos({ ...emptyPosition, seq: pos.seq + 1 });
+            }
+          }}
+        >
+          <span>
+            x: {pos.x}, y: {pos.y}
+          </span>
+          <br />
+          <label htmlFor="state">State Name:</label>
+          <input
+            ref={inputRef}
+            type="text"
+            name="state"
+            id="state"
+            value={pos.state}
+            onChange={(e) => setPos({ ...pos, state: e.target.value })}
+          />
+          <br />
+          <label htmlFor="capital">State Capital:</label>
+          <input
+            type="text"
+            name="capital"
+            id="capital"
+            value={pos.capital}
+            onChange={(e) => setPos({ ...pos, capital: e.target.value })}
+          />
+          <br />
+          <label htmlFor="seq">Sequence No.</label>
+          <input
+            type="text"
+            name="seq"
+            id="seq"
+            value={pos.seq}
+            onChange={(e) => setPos({ ...pos, seq: Number(e.target.value) })}
+          />
+          <br />
+          <button style={{ margin: '0.5em 0 0 8em' }}>Add Point</button>
+        </form>
+        <div className="raw-json">{JSON.stringify(positions)}</div>
+      </div>
     </div>
   );
 };

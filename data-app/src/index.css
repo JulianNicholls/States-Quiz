@@ -35,8 +35,7 @@ main {
 }
 
 form {
-  border: 1px solid #444;
-  padding: 0.5rem;
+  width: 40%
 }
 
 label {
@@ -101,4 +100,22 @@ td.numeric {
 
 .spot.selected {
   background: blue;
+}
+
+.form-flex {
+  width: 950px;
+  height: 20vh;
+  display: flex;
+  border: 1px solid #444;
+  padding: 0.5rem;
+}
+
+.raw-json {
+  width: 60%;
+  border: 1px solid #444;
+  margin-left: 1em;
+  padding: 0.5em;
+  font-family: monospace;
+  white-space: pre-wrap;
+  overflow-y: scroll;
 }
