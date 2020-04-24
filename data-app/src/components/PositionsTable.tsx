@@ -9,7 +9,7 @@ const PositionsTable = ({ positions }: PTProps) => {
     <table className="pos-table">
       <thead>
         <tr>
-          <th>#</th>
+          <th>Seq</th>
           <th>State</th>
           <th>Capital</th>
           <th>X</th>
@@ -17,9 +17,9 @@ const PositionsTable = ({ positions }: PTProps) => {
         </tr>
       </thead>
       <tbody>
-        {positions.map(({ x, y, state, capital }, idx) => (
+        {positions.map(({ x, y, state, capital, seq }) => (
           <tr key={`${x}${y}`}>
-            <td className="numeric">{idx + 1}</td>
+            <td className="numeric">{seq || ''}</td>
             <td className="name">{state || ''}</td>
             <td className="name">{capital || ''}</td>
             <td className="numeric">{x}</td>

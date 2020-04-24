@@ -7,34 +7,32 @@ interface CIProps {
   savePosition: (pos: MapPosition) => void;
 }
 
-const emptyPosition: Point2D = { x: 0, y: 0 };
+const emptyPosition: MapPosition = { x: 0, y: 0, state: '', capital: '', seq: -1 };
 
 const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
   const imgRef = useRef(null);
   const inputRef = useRef(null);
   const [rect, setRect] = useState<ClientRect>();
-  const [pos, setPos] = useState<Point2D>(emptyPosition);
-  const [stateName, setStateName] = useState<string>('');
-  const [capital, setCapital] = useState<string>('');
+  const [pos, setPos] = useState<MapPosition>(emptyPosition);
   const [selected, setSelected] = useState<number>(-1);
 
   useEffect(() => {
     if (imgRef && imgRef.current) setRect(imgRef.current.getBoundingClientRect());
   }, [imgRef]);
 
-  const onClick = (e: React.MouseEvent<Element>) => {
+  const onClick = (e: React.MouseEvent<Element>): void => {
     const x = Math.round(e.clientX - rect.left);
     const y = Math.round(e.clientY - rect.top);
 
-    setPos({ x, y });
+    setPos({ ...pos, x, y });
 
     positions.forEach((p, index) => {
       if (Math.abs(p.x - x) < 6 && Math.abs(p.y - y) < 6) {
         console.log(index);
         setSelected(index);
-        setPos({ x, y });
-        setStateName(p.state);
-        setCapital(p.capital || '');
+        if (p.seq)
+          setPos({ x, y, state: p.state, capital: p.capital, seq: p.seq });
+        else setPos({ ...pos, x, y, state: p.state, capital: p.capital });
       }
     });
 
@@ -43,17 +41,12 @@ const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
 
   return (
     <div className="positioned" ref={imgRef}>
-      <img
-        src={src}
-        alt={alt || 'Clickable Image'}
-        // onMouseMove={onMove}
-        onClick={onClick}
-      />
+      <img src={src} alt={alt || 'Clickable Image'} onClick={onClick} />
 
-      {positions.map(({ x, y, capital }, index) => {
+      {positions.map(({ x, y, capital, seq }, index) => {
         let klass = 'spot';
 
-        if (capital) klass += ' capital';
+        if (capital && seq) klass += ' capital';
         if (index === selected) klass += ' selected';
 
         return (
@@ -69,11 +62,9 @@ const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
         onSubmit={(e) => {
           e.preventDefault();
 
-          if (pos.x > 0 && pos.y > 0 && stateName !== '') {
-            savePosition({ x: pos.x, y: pos.y, state: stateName, capital });
-            setPos(emptyPosition);
-            setStateName('');
-            setCapital('');
+          if (pos.x > 0 && pos.y > 0 && pos.state !== '') {
+            savePosition(pos);
+            setPos({ ...emptyPosition, seq: pos.seq + 1 });
           }
         }}
       >
@@ -87,8 +78,8 @@ const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
           type="text"
           name="state"
           id="state"
-          value={stateName}
-          onChange={(e) => setStateName(e.target.value)}
+          value={pos.state}
+          onChange={(e) => setPos({ ...pos, state: e.target.value })}
         />
         <br />
         <label htmlFor="capital">State Capital:</label>
@@ -96,8 +87,17 @@ const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
           type="text"
           name="capital"
           id="capital"
-          value={capital}
-          onChange={(e) => setCapital(e.target.value)}
+          value={pos.capital}
+          onChange={(e) => setPos({ ...pos, capital: e.target.value })}
+        />
+        <br />
+        <label htmlFor="seq">Sequence No.</label>
+        <input
+          type="text"
+          name="seq"
+          id="seq"
+          value={pos.seq}
+          onChange={(e) => setPos({ ...pos, seq: Number(e.target.value) })}
         />
         <br />
         <button style={{ margin: '0.5em 0 0 8em' }}>Add Point</button>
