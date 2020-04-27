@@ -8,7 +8,6 @@ const PositionsTable = ({ positions }: PTProps) => {
   const [sortedPositions, setSorted] = useState([]);
 
   const sortBySeq = () => {
-    console.log('sortBySeq');
     const newSorted = [...sortedPositions].sort(
       (a: MapPosition, b: MapPosition) => a.seq - b.seq
     );
@@ -16,7 +15,7 @@ const PositionsTable = ({ positions }: PTProps) => {
     setSorted(newSorted);
   };
 
-  const sortByName = () => {
+  const sortByState = () => {
     const newSorted = [...sortedPositions].sort((a: MapPosition, b: MapPosition) =>
       a.state.localeCompare(b.state)
     );
@@ -43,7 +42,7 @@ const PositionsTable = ({ positions }: PTProps) => {
           <th className="clickable-header" onClick={sortBySeq}>
             Seq
           </th>
-          <th className="clickable-header" onClick={sortByName}>
+          <th className="clickable-header" onClick={sortByState}>
             State
           </th>
           <th className="clickable-header" onClick={sortByCapital}>

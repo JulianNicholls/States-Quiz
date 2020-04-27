@@ -1,6 +1,6 @@
 {
-  "name": "states-quiz",
-  "version": "0.1.0",
+  "name": "states-quiz-data-app",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@types/jest": "^25.2.1",
