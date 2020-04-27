@@ -73,15 +73,19 @@ input {
   border: 1px solid #bbb;
 }
 
-td.name {
+.pos-table td.name {
   width: 160px;
 }
 
-td.numeric {
+.pos-table td.numeric {
   font-family: monospace;
   font-size: 16px;
   text-align: right;
   padding-right: 0.3em;
+}
+
+th.clickable-header {
+  cursor: pointer;
 }
 
 .spot {

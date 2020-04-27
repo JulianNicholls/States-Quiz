@@ -28,7 +28,6 @@ const ClickableImage = ({ src, alt, savePosition, positions }: CIProps) => {
 
     positions.forEach((p, index) => {
       if (Math.abs(p.x - x) < 6 && Math.abs(p.y - y) < 6) {
-        console.log(index);
         setSelected(index);
         if (p.seq)
           setPos({ x, y, state: p.state, capital: p.capital, seq: p.seq });
