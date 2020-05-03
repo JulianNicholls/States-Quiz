@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import ClickableImage from './components/ClickableImage';
+import Quiz from './components/Quiz';
 
 import './App.css';
 
@@ -25,8 +25,7 @@ function App() {
   return (
     <header>
       <h1>States Quiz</h1>
-
-      <ClickableImage src="images/states.png" />
+      <Quiz mapsrc="images/states.png" states={states} />
     </header>
   );
 }
