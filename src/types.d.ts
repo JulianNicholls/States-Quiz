@@ -8,3 +8,7 @@ interface State extends Point2D {
   capital: string;
   seq?: number;
 }
+
+interface Fill extends Point2D {
+  colour: number;
+}
