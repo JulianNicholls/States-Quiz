@@ -43,7 +43,7 @@ canvas {
   margin: 2rem auto;
   padding-left: 1rem;
   padding-right: 1rem;
-  max-width: 1200px;
+  max-width: 1150px;
 }
 
 .questions-score {
@@ -85,7 +85,7 @@ canvas {
 }
 
 .wrong-answers {
-  max-height: calc(400px - 5rem);
+  max-height: calc(400px - 3.5rem);
   overflow-y: scroll;
   padding-left: 1rem;
 }

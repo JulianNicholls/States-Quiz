@@ -5,14 +5,18 @@ A Quiz about the states of the USA and their capitals.
 ## Two projects
 
 There are actually two projects in this repo. The root directory is the quiz
-and the [data-app](/data-app) directory contains the project that I used to 
-create the dates list, with the locations in the states map image, and the 
+and the [data-app](/data-app) directory contains the project that I used to
+create the dates list, with the locations in the states map image, and the
 names and capitals.
 
 ## Progress
 
-First version that allows you to click on a state name for the highlighted
-state.
+Click on the answer that matches the state highlighted in Blue.
+
+Keeps score and shows wrong answers.
+
+**BUG**: After all 50 states, currently it crashes. There is no mystery,
+it's just that there is no code dealing with it at the moment.
 
 ## Git client
 

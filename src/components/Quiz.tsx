@@ -25,6 +25,11 @@ const Quiz = ({ mapsrc, states }: QProps) => {
       const sorted = [...states];
 
       if (name === 'seq') sorted.sort((a: State, b: State) => a.seq - b.seq);
+      if (name === 'alpha')
+        sorted.sort((a: State, b: State) => a.name.localeCompare(b.name));
+      if (name === 'capital')
+        sorted.sort((a: State, b: State) => a.capital.localeCompare(b.capital));
+
       if (name === 'shuffle') shuffle(sorted);
 
       return sorted;
@@ -44,7 +49,8 @@ const Quiz = ({ mapsrc, states }: QProps) => {
 
     if (states.length !== 0) {
       // const sorted = sortedBy('seq');
-      const sorted = sortedBy('shuffle');
+      // const sorted = sortedBy('shuffle');
+      const sorted = sortedBy('alpha');
 
       const initial = [
         { x: sorted[0].x, y: sorted[0].y, colour: QUESTION_COLOUR },
