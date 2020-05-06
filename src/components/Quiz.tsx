@@ -8,8 +8,8 @@ interface QProps {
   states: Array<State>;
 }
 
-const QUESTION_COLOUR = 0x4d4dff;
-const CORRECT_COLOUR = 0x00d600;
+const QUESTION_COLOUR = 0x5d5dff;
+const CORRECT_COLOUR = 0x20d620;
 const WRONG_COLOUR = 0xff4040;
 
 const Quiz = ({ mapsrc, states }: QProps) => {
@@ -23,12 +23,26 @@ const Quiz = ({ mapsrc, states }: QProps) => {
       const sorted = [...states];
 
       if (name === 'seq') sorted.sort((a: State, b: State) => a.seq - b.seq);
+      if (name === 'shuffle') shuffle(sorted);
 
       return sorted;
     };
 
+    const shuffle = (sorted: Array<State>) => {
+      const halfSize = sorted.length >> 1;
+
+      for (let i = 0; i < halfSize; ++i) {
+        const randIdx = Math.floor(Math.random() * halfSize) + halfSize;
+        const temp = sorted[randIdx];
+
+        sorted[randIdx] = sorted[i];
+        sorted[i] = temp;
+      }
+    };
+
     if (states.length !== 0) {
-      const sorted = sortedBy('seq');
+      // const sorted = sortedBy('seq');
+      const sorted = sortedBy('shuffle');
 
       const initial = [
         { x: sorted[0].x, y: sorted[0].y, colour: QUESTION_COLOUR },
