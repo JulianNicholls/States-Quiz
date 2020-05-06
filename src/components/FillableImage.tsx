@@ -11,17 +11,16 @@ interface CIProps {
 const FillableImage = ({ src, fills }: CIProps) => {
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
-  // const [rect, setRect] = useState<ClientRect>();
   const [width, setWidth] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
 
-  const [ctx, setCtx] = useState<CanvasRenderingContext2D>(null);
-
   useEffect(() => {
-    // ***************
-    // Beware that this algorithm assumes that there is an ultimate edge on all sides.
-    // ***************
+    // **********************************************************************
+    // Beware that this algorithm assumes that there is an ultimate edge
+    // on all sides.
+    // **********************************************************************
     const floodFill = (
+      ctx: CanvasRenderingContext2D,
       x: number,
       y: number,
       clr: number = FILL,
@@ -40,7 +39,7 @@ const FillableImage = ({ src, fills }: CIProps) => {
         pixels[offset + 3] = 0xff;
       };
 
-      const floodFillQueue = (x: number, y: number) => {
+      const floodFillQueue = (x: number, y: number): void => {
         const lineWidth = width * 4; // Line of RGBA
         const offset = y * lineWidth + x * 4;
 
@@ -84,25 +83,22 @@ const FillableImage = ({ src, fills }: CIProps) => {
     if (canvasRef && canvasRef.current) {
       setWidth(canvasRef.current.width);
       setHeight(canvasRef.current.height);
-      // setRect(canvasRef.current.getBoundingClientRect());
 
-      const cctx = canvasRef.current.getContext('2d');
+      const ctx = canvasRef.current.getContext('2d');
 
-      setCtx(cctx);
-
-      cctx.fillStyle = '#eeeeff';
-      cctx.fillRect(0, 0, cctx.canvas.width, cctx.canvas.height);
+      ctx.fillStyle = '#eeeeff';
+      ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
       imageRef.current = new Image();
 
       imageRef.current.onload = () => {
-        cctx.drawImage(imageRef.current, 0, 0);
-        fills.forEach(({ x, y, colour }) => floodFill(x, y, colour));
+        ctx.drawImage(imageRef.current, 0, 0);
+        fills.forEach(({ x, y, colour }) => floodFill(ctx, x, y, colour));
       };
 
       imageRef.current.src = src;
     }
-  }, [canvasRef, ctx, height, width, src, fills]);
+  }, [canvasRef, height, width, src, fills]);
 
   return <canvas ref={canvasRef} width="860" height="600" />;
 };
