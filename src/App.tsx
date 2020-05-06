@@ -25,7 +25,9 @@ function App() {
   return (
     <header>
       <h1>States Quiz</h1>
-      <Quiz mapsrc="images/states.png" states={states} />
+      <div className="container">
+        <Quiz mapsrc="images/states.png" states={states} />
+      </div>
     </header>
   );
 }

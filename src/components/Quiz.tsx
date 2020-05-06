@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import FillableImage from './FillableImage';
 import StatesQuestions from './StatesQuestions';
+import WrongAnswers from './WrongAnswers';
 
 interface QProps {
   mapsrc: string;
@@ -17,6 +18,7 @@ const Quiz = ({ mapsrc, states }: QProps) => {
   const [score, setScore] = useState<number>(0);
   const [fills, setFills] = useState<Array<Fill>>([]);
   const [sortedStates, setSortedStates] = useState<Array<State>>([]);
+  const [badAnswers, setBadAnswers] = useState<Array<string>>([]);
 
   useEffect(() => {
     const sortedBy = (name: string): Array<State> => {
@@ -53,7 +55,7 @@ const Quiz = ({ mapsrc, states }: QProps) => {
     }
   }, [states]);
 
-  const answerClick = (correct: boolean) => {
+  const answerClick = (correct: boolean, answer: string) => {
     const newFills = [
       ...fills,
       {
@@ -63,9 +65,16 @@ const Quiz = ({ mapsrc, states }: QProps) => {
       },
     ];
 
-    newFills[index].colour = correct ? CORRECT_COLOUR : WRONG_COLOUR;
+    if (correct) {
+      setScore(score + 1);
+      newFills[index].colour = CORRECT_COLOUR;
+    } else {
+      const bad = [...badAnswers, answer];
 
-    if (correct) setScore(score + 1);
+      setBadAnswers(bad);
+
+      newFills[index].colour = WRONG_COLOUR;
+    }
 
     setFills(newFills);
     setIndex(index + 1);
@@ -74,11 +83,17 @@ const Quiz = ({ mapsrc, states }: QProps) => {
   return (
     <div className="quiz-holder">
       <FillableImage src={mapsrc} fills={fills} />
-      <StatesQuestions
-        states={sortedStates}
-        index={index}
-        answerClick={answerClick}
-      />
+      <div className="questions-score">
+        <StatesQuestions
+          states={sortedStates}
+          index={index}
+          answerClick={answerClick}
+        />
+        <div className="score-holder">
+          <div className="score">Score: {score}</div>
+          <WrongAnswers answers={badAnswers} />
+        </div>
+      </div>
     </div>
   );
 };

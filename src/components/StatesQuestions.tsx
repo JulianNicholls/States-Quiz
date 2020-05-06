@@ -3,7 +3,7 @@ import React from 'react';
 interface SQProps {
   states: Array<State>;
   index: number;
-  answerClick: (correct: boolean) => void;
+  answerClick: (correct: boolean, answer: string) => void;
 }
 
 const StatesQuestions = ({ states, index, answerClick }: SQProps) => {
@@ -20,9 +20,6 @@ const StatesQuestions = ({ states, index, answerClick }: SQProps) => {
     return num;
   };
 
-  const correctClicked = () => answerClick(true);
-  const wrongClicked = () => answerClick(false);
-
   const used: Array<number> = [index];
 
   for (let i = 0; i < 3; ++i) {
@@ -38,7 +35,7 @@ const StatesQuestions = ({ states, index, answerClick }: SQProps) => {
         <div
           key={num}
           className="answer"
-          onClick={num === index ? correctClicked : wrongClicked}
+          onClick={() => answerClick(num === index, states[num].name)}
         >
           {states[num].name}
         </div>

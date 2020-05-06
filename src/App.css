@@ -32,7 +32,6 @@ h1 {
 
 .quiz-holder {
   display: flex;
-  margin: 2rem 1rem;
   justify-content: space-between;
 }
 
@@ -40,17 +39,57 @@ canvas {
   display: block;
 }
 
+.container {
+  margin: 2rem auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  max-width: 1200px;
+}
+
+.questions-score {
+  background: #eeeeff;
+  width: 220px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .states-questions {
   border: 1px solid #000080;
-  background: #eeeeff;
   padding: 1em;
-  min-width: 200px;
+  height: 200px;
 }
 
 .answer {
   background: #000080;
-  padding: 0.5em 1em;
+  padding: 0.4em 1em;
   margin-bottom: 5px;
   color: white;
   cursor: pointer;
+}
+
+.score-holder {
+  margin-top: 1rem;
+  border: 1px solid #000080;
+  padding: 0;
+  flex: 1;
+}
+
+.score {
+  background: #ccccff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  line-height: 2rem;
+  padding-left: 1rem;
+}
+
+.wrong-answers {
+  max-height: calc(400px - 5rem);
+  overflow-y: scroll;
+  padding-left: 1rem;
+}
+
+.wrong span {
+  color: #c00000;
 }
