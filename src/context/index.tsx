@@ -17,7 +17,7 @@ interface GPProps {
 
 const GameContext = React.createContext<GameState>({} as GameState);
 
-export const GameProvider = ({ children }: GPProps): JSX.Element => {
+export const GameStateProvider = ({ children }: GPProps): JSX.Element => {
   const [states, setStates] = useState<Array<State>>([]);
   const [phase, setPhase] = useState<number>(SELECTION);
 
@@ -60,7 +60,7 @@ export const GameProvider = ({ children }: GPProps): JSX.Element => {
     };
 
     loadStates();
-  });
+  }, []);
 
   const state: GameState = {
     phase,
@@ -76,7 +76,9 @@ export const useGameState = (): GameState => {
   const context = useContext(GameContext);
 
   if (context === undefined)
-    throw new Error('useGameState() but be used inside a GameProvider block.');
+    throw new Error(
+      'useGameState() but be used inside a GameStateProvider block.'
+    );
 
   return context;
 };

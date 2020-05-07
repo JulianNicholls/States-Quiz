@@ -43,12 +43,12 @@ canvas {
   margin: 2rem auto;
   padding-left: 1rem;
   padding-right: 1rem;
-  max-width: 1150px;
+  max-width: 1180px;
 }
 
 .questions-score {
   background: #eeeeff;
-  width: 220px;
+  width: 250px;
   height: 600px;
   display: flex;
   flex-direction: column;
@@ -62,7 +62,7 @@ canvas {
   height: 200px;
 }
 
-.answer {
+.option {
   background: #000080;
   padding: 0.4em 1em;
   margin-bottom: 5px;
@@ -88,9 +88,18 @@ canvas {
 .wrong-answers {
   max-height: calc(400px - 3.5rem);
   overflow-y: scroll;
-  padding-left: 1rem;
 }
 
-.wrong span {
+.wrong {
+  background: #ddddff;
+  margin-top: 5px;
+  padding: 0.2rem 0 0.2rem 1rem;
+}
+
+.wrong .answer {
   color: #c00000;
+}
+
+.wrong .correct {
+  color: #007000;
 }

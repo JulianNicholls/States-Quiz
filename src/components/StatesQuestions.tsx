@@ -1,13 +1,13 @@
 import React from 'react';
 
 interface SQProps {
-  states: Array<string>;
+  answers: Array<string>;
   index: number;
   answerClick: (correct: boolean, answer: string) => void;
 }
 
-const StatesQuestions = ({ states, index, answerClick }: SQProps) => {
-  if (states.length === 0) return null;
+const StatesQuestions = ({ answers, index, answerClick }: SQProps) => {
+  if (answers.length === 0) return null;
 
   const randomNotIn = (size: number, min: number, used: Array<number>): number => {
     let num = -1;
@@ -23,7 +23,7 @@ const StatesQuestions = ({ states, index, answerClick }: SQProps) => {
   const used: Array<number> = [index];
 
   for (let i = 0; i < 3; ++i) {
-    const num = randomNotIn(states.length, index, used);
+    const num = randomNotIn(answers.length, index, used);
 
     if (Math.random() < 0.5) used.push(num);
     else used.unshift(num);
@@ -34,10 +34,10 @@ const StatesQuestions = ({ states, index, answerClick }: SQProps) => {
       {used.map((num) => (
         <div
           key={num}
-          className="answer"
-          onClick={() => answerClick(num === index, states[num])}
+          className="option"
+          onClick={() => answerClick(num === index, answers[num])}
         >
-          {states[num]}
+          {answers[num]}
         </div>
       ))}
     </div>

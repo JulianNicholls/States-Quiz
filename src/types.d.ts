@@ -12,3 +12,8 @@ interface State extends Point2D {
 interface Fill extends Point2D {
   colour: number;
 }
+
+interface Wrong {
+  answer: string;
+  correct: string;
+}
