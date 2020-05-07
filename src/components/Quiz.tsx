@@ -51,6 +51,7 @@ const Quiz = ({ mapsrc, states }: QProps) => {
       // const sorted = sortedBy('seq');
       // const sorted = sortedBy('shuffle');
       const sorted = sortedBy('alpha');
+      // const sorted = sortedBy('capital');
 
       const initial = [
         { x: sorted[0].x, y: sorted[0].y, colour: QUESTION_COLOUR },
@@ -91,7 +92,7 @@ const Quiz = ({ mapsrc, states }: QProps) => {
       <FillableImage src={mapsrc} fills={fills} />
       <div className="questions-score">
         <StatesQuestions
-          states={sortedStates}
+          states={sortedStates.map(({ capital }) => capital)}
           index={index}
           answerClick={answerClick}
         />

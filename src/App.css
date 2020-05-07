@@ -58,6 +58,7 @@ canvas {
 .states-questions {
   border: 1px solid #000080;
   padding: 1em;
+  margin-left: 1rem;
   height: 200px;
 }
 

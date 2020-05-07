@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface SQProps {
-  states: Array<State>;
+  states: Array<string>;
   index: number;
   answerClick: (correct: boolean, answer: string) => void;
 }
@@ -35,9 +35,9 @@ const StatesQuestions = ({ states, index, answerClick }: SQProps) => {
         <div
           key={num}
           className="answer"
-          onClick={() => answerClick(num === index, states[num].name)}
+          onClick={() => answerClick(num === index, states[num])}
         >
-          {states[num].name}
+          {states[num]}
         </div>
       ))}
     </div>
