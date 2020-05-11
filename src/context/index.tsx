@@ -2,14 +2,16 @@ import React, { useState, useEffect, useContext } from 'react';
 
 export const SELECTION = 1;
 export const PLAYING = 2;
-export const XOMPLETE = 3;
+export const COMPLETE = 3;
 
-interface GameState {
+type GameState = {
   phase: number;
   setPhase: (phase: number) => void;
   states: Array<State>;
   sortBy: (item: string) => void;
-}
+  score: number;
+  setScore: (score: number) => void;
+};
 
 interface GPProps {
   children: JSX.Element;
@@ -20,6 +22,7 @@ const GameContext = React.createContext<GameState>({} as GameState);
 export const GameStateProvider = ({ children }: GPProps): JSX.Element => {
   const [states, setStates] = useState<Array<State>>([]);
   const [phase, setPhase] = useState<number>(SELECTION);
+  const [score, setScore] = useState<number>(0);
 
   const sortBy = (name: string): void => {
     const sorted = [...states];
@@ -65,8 +68,10 @@ export const GameStateProvider = ({ children }: GPProps): JSX.Element => {
   const state: GameState = {
     phase,
     setPhase,
-    sortBy,
     states,
+    sortBy,
+    score,
+    setScore,
   };
 
   return <GameContext.Provider value={state}>{children}</GameContext.Provider>;
