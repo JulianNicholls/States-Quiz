@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-export const SELECTION = 1;
-export const PLAYING = 2;
-export const COMPLETE = 3;
+export const SELECTION = 'selection';
+export const PLAYING = 'playing';
+export const COMPLETE = 'complete';
 
 type GameState = {
-  phase: number;
-  setPhase: (phase: number) => void;
+  phase: string;
+  answerType: AnswerType;
   states: Array<State>;
-  sortBy: (item: string) => void;
   score: number;
+  setPhase: (phase: string) => void;
+  setAnswerType: (a: AnswerType) => void;
+  sortBy: (item: string) => void;
   setScore: (score: number) => void;
 };
 
@@ -21,8 +23,9 @@ const GameContext = React.createContext<GameState>({} as GameState);
 
 export const GameStateProvider = ({ children }: GPProps): JSX.Element => {
   const [states, setStates] = useState<Array<State>>([]);
-  const [phase, setPhase] = useState<number>(SELECTION);
+  const [phase, setPhase] = useState<string>(SELECTION);
   const [score, setScore] = useState<number>(0);
+  const [answerType, setAnswerType] = useState<AnswerType>('states');
 
   const sortBy = (name: string): void => {
     const sorted = [...states];
@@ -67,10 +70,12 @@ export const GameStateProvider = ({ children }: GPProps): JSX.Element => {
 
   const state: GameState = {
     phase,
-    setPhase,
+    answerType,
     states,
-    sortBy,
     score,
+    setPhase,
+    setAnswerType,
+    sortBy,
     setScore,
   };
 

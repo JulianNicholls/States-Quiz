@@ -46,7 +46,7 @@
   { "x": 773, "y": 115, "name": "Vermont", "capital": "Montpelier", "seq": 43 },
   { "x": 717, "y": 261, "name": "Virginia", "capital": "Richmond", "seq": 37 },
   { "x": 106, "y": 49, "name": "Washington", "capital": "Olympia", "seq": 1 },
+  { "x": 680, "y": 253, "name": "West Virginia", "capital": "Charleston", "seq": 34 },
   { "x": 527, "y": 145, "name": "Wisconsin", "capital": "Madison", "seq": 23 },
-  { "x": 276, "y": 166, "name": "Wyoming", "capital": "Cheyenne", "seq": 9 },
-  { "x": 680, "y": 253, "name": "West Virginia", "capital": "Charleston", "seq": 34 }
+  { "x": 276, "y": 166, "name": "Wyoming", "capital": "Cheyenne", "seq": 9 }
 ]

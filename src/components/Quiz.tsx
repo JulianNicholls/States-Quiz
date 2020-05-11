@@ -14,7 +14,7 @@ const CORRECT_COLOUR = 0x20d620;
 const WRONG_COLOUR = 0xff4040;
 
 const Quiz = ({ mapsrc }: QProps) => {
-  const { states, setPhase, score, setScore } = useGameState();
+  const { answerType, states, setPhase, score, setScore } = useGameState();
 
   const [index, setIndex] = useState<number>(0);
   const [fills, setFills] = useState<Array<Fill>>([
@@ -31,7 +31,13 @@ const Quiz = ({ mapsrc }: QProps) => {
     } else {
       const bad = [
         ...badAnswers,
-        { answer, correct: `${states[index].capital}, ${states[index].name}` },
+        {
+          answer,
+          correct:
+            answerType === 'capitals'
+              ? `${states[index].capital}, ${states[index].name}`
+              : states[index].name,
+        },
       ];
 
       setBadAnswers(bad);
@@ -57,7 +63,9 @@ const Quiz = ({ mapsrc }: QProps) => {
       <FillableImage src={mapsrc} fills={fills} />
       <div className="questions-score">
         <StatesQuestions
-          answers={states.map(({ capital }) => capital)}
+          answers={states.map(({ name, capital }) =>
+            answerType === 'capitals' ? capital : name
+          )}
           index={index}
           answerClick={answerClick}
         />

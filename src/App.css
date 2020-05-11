@@ -7,7 +7,14 @@
   box-sizing: border-box;
 }
 
+:root {
+  --background: #9DBCD4;
+  --accent: #FFFD01;
+  --alternate: #6D5ACF;
+}
+
 body {
+  background: var(--background);
   margin: 0;
   padding: 0;
   font-family: Poppins, sans-serif;
@@ -27,6 +34,7 @@ h6 {
 }
 
 h1 {
+  margin: 1em;
   text-align: center;
 }
 
@@ -37,6 +45,39 @@ h1 {
 
 canvas {
   display: block;
+}
+
+form#select-game {
+  background: var(--background);
+  border: 1px solid black;
+  width: 20rem;
+  padding: 1rem;
+  margin: 1rem auto;
+}
+
+select {
+  display: block;
+  background: var(--alternate);
+  color: white;
+  font-size: 1.2em;
+  margin: 1em 0 1em 0;
+  padding: 0.2em;
+  width: 100%;
+}
+
+.selection {
+  background: var(--background) url(/images/states.png) no-repeat;
+  background-position-x: center;
+  /* background-position-y: -10%; */
+  background-blend-mode: soft-light;
+  min-height: 600px
+}
+
+.btn-large {
+  font-size: inherit;
+  background: var(--alternate);
+  color: var(--accent);
+  padding: 0.3em 1em;
 }
 
 .container {

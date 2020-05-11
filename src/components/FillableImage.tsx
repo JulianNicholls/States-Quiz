@@ -1,8 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 
-const BKGR = 0xffffff;
-const FILL = 0xff0000;
-
 interface CIProps {
   src: string;
   fills: Array<Fill>;
@@ -21,8 +18,8 @@ const FillableImage = ({ src, fills }: CIProps) => {
       ctx: CanvasRenderingContext2D,
       x: number,
       y: number,
-      clr: number = FILL,
-      bkgr: number = BKGR
+      clr: number,
+      bkgr: number = 0xffffff
     ): void => {
       const { width, height } = ctx.canvas;
       const imageData = ctx.getImageData(0, 0, width, height);
@@ -42,7 +39,7 @@ const FillableImage = ({ src, fills }: CIProps) => {
         const lineWidth = width * 4; // Line of RGBA
         const offset = y * lineWidth + x * 4;
 
-        if (colour(offset) !== BKGR) return;
+        if (colour(offset) !== bkgr) return;
 
         setColour(offset, clr);
 
@@ -79,9 +76,8 @@ const FillableImage = ({ src, fills }: CIProps) => {
       ctx.putImageData(imageData, 0, 0);
     };
 
-    if (canvasRef && canvasRef.current && canvasRef.current.width) {
+    if (canvasRef && canvasRef.current) {
       const ctx = canvasRef.current.getContext('2d');
-      console.log({ ref: canvasRef.current, ctx });
 
       ctx.fillStyle = '#eeeeff';
       ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);

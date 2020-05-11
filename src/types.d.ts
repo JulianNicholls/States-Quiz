@@ -1,7 +1,7 @@
-interface Point2D {
+type Point2D = {
   x: number;
   y: number;
-}
+};
 
 interface State extends Point2D {
   name: string;
@@ -17,3 +17,5 @@ interface Wrong {
   answer: string;
   correct: string;
 }
+
+type AnswerType = 'states' | 'capitals';
