@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 const BKGR = 0xffffff;
 const FILL = 0xff0000;
@@ -11,8 +11,6 @@ interface CIProps {
 const FillableImage = ({ src, fills }: CIProps) => {
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
-  const [width, setWidth] = useState<number>(0);
-  const [height, setHeight] = useState<number>(0);
 
   useEffect(() => {
     // **********************************************************************
@@ -26,6 +24,7 @@ const FillableImage = ({ src, fills }: CIProps) => {
       clr: number = FILL,
       bkgr: number = BKGR
     ): void => {
+      const { width, height } = ctx.canvas;
       const imageData = ctx.getImageData(0, 0, width, height);
       const pixels = imageData.data;
 
@@ -80,11 +79,9 @@ const FillableImage = ({ src, fills }: CIProps) => {
       ctx.putImageData(imageData, 0, 0);
     };
 
-    if (canvasRef && canvasRef.current) {
-      setWidth(canvasRef.current.width);
-      setHeight(canvasRef.current.height);
-
+    if (canvasRef && canvasRef.current && canvasRef.current.width) {
       const ctx = canvasRef.current.getContext('2d');
+      console.log({ ref: canvasRef.current, ctx });
 
       ctx.fillStyle = '#eeeeff';
       ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -98,7 +95,7 @@ const FillableImage = ({ src, fills }: CIProps) => {
 
       imageRef.current.src = src;
     }
-  }, [canvasRef, height, width, src, fills]);
+  }, [canvasRef, src, fills]);
 
   return <canvas ref={canvasRef} width="860" height="600" />;
 };
