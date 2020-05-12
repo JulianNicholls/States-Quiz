@@ -15,8 +15,8 @@ Click on the answer that matches the state highlighted in Blue.
 
 Keeps score and shows wrong answers.
 
-**BUG**: After all 50 states, currently it crashes. There is no mystery,
-it's just that there is no code dealing with it at the moment.
+You can now select what you want to be tested on (states or their capitals)
+and what order.
 
 ## Git client
 
