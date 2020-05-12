@@ -23,12 +23,14 @@ const SelectGame = (): JSX.Element => {
           setPhase(PLAYING);
         }}
       >
-        <select onChange={setNames}>
+        <label htmlFor="type">Identify by</label>
+        <select id="type" onChange={setNames}>
           <option value="states">State Names</option>
           <option value="capitals">State Capitals</option>
         </select>
 
-        <select onChange={setOrder}>
+        <label htmlFor="order">Presentation Order</label>
+        <select id="order" onChange={setOrder}>
           <option value="alpha">Alphabetical by State</option>
           <option value="capital">Alphabetical by Capital</option>
           <option value="seq">West to East</option>
