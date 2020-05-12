@@ -4,18 +4,8 @@ import SelectGame from './components/SelectGame';
 import Quiz from './components/Quiz';
 
 import './App.css';
-import { useGameState, SELECTION, PLAYING, COMPLETE } from './context';
-
-const GameComplete = (): JSX.Element => {
-  const { score, setPhase } = useGameState();
-
-  return (
-    <div>
-      <h2 style={{ textAlign: 'center' }}>Score: {score}</h2>;
-      <button className="btn-large" onClick={() => setPhase(SELECTION)}></button>
-    </div>
-  );
-};
+import GameComplete from './components/GameComplete';
+import { useGameState, PLAYING, COMPLETE } from './context';
 
 function App(): JSX.Element {
   const { phase } = useGameState();
