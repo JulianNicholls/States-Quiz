@@ -2,10 +2,10 @@ import React from 'react';
 
 import SelectGame from './components/SelectGame';
 import Quiz from './components/Quiz';
-
-import './App.css';
 import GameComplete from './components/GameComplete';
+
 import { useGameState, PLAYING, COMPLETE } from './context';
+import './App.css';
 
 function App(): JSX.Element {
   const { phase } = useGameState();

@@ -30,13 +30,23 @@ export const GameStateProvider = ({ children }: GPProps): JSX.Element => {
   const sortBy = (name: string): void => {
     const sorted = [...states];
 
-    if (name === 'seq') sorted.sort((a: State, b: State) => a.seq - b.seq);
-    if (name === 'alpha')
-      sorted.sort((a: State, b: State) => a.name.localeCompare(b.name));
-    if (name === 'capital')
-      sorted.sort((a: State, b: State) => a.capital.localeCompare(b.capital));
+    switch (name) {
+      case 'seq':
+        sorted.sort((a: State, b: State) => a.seq - b.seq);
+        break;
 
-    if (name === 'shuffle') shuffle(sorted);
+      case 'alpha':
+        sorted.sort((a: State, b: State) => a.name.localeCompare(b.name));
+        break;
+
+      case 'capital':
+        sorted.sort((a: State, b: State) => a.capital.localeCompare(b.capital));
+        break;
+
+      case 'shuffle':
+        shuffle(sorted);
+        break;
+    }
 
     setStates(sorted);
   };
@@ -46,8 +56,8 @@ export const GameStateProvider = ({ children }: GPProps): JSX.Element => {
 
     for (let i = 0; i < halfSize; ++i) {
       const randIdx = Math.floor(Math.random() * halfSize) + halfSize;
-      const temp = sorted[randIdx];
 
+      const temp = sorted[randIdx];
       sorted[randIdx] = sorted[i];
       sorted[i] = temp;
     }
@@ -60,8 +70,8 @@ export const GameStateProvider = ({ children }: GPProps): JSX.Element => {
         const lstates = await response.json();
 
         setStates(lstates);
-      } catch (e) {
-        console.error({ e });
+      } catch (err) {
+        console.error({ err });
       }
     };
 
@@ -85,10 +95,11 @@ export const GameStateProvider = ({ children }: GPProps): JSX.Element => {
 export const useGameState = (): GameState => {
   const context = useContext(GameContext);
 
-  if (context === undefined)
+  if (context === undefined) {
     throw new Error(
       'useGameState() but be used inside a GameStateProvider block.'
     );
+  }
 
   return context;
 };
