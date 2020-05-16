@@ -6,7 +6,7 @@ A Quiz about the states of the USA and their capitals.
 
 There are actually two projects in this repo. The root directory is the quiz
 and the [data-app](/data-app) directory contains the project that I used to
-create the dates list, with the locations in the states map image, and the
+create the states list, with the locations in the states map image, and the
 names and capitals.
 
 ## Progress
