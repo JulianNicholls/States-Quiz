@@ -19,7 +19,7 @@ function App(): JSX.Element {
         {phase === COMPLETE ? (
           <GameComplete />
         ) : phase === PLAYING ? (
-          <Quiz mapsrc="images/states.png" />
+          <Quiz mapsrc="/images/states.png" />
         ) : (
           <SelectGame />
         )}

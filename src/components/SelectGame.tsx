@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { PLAYING, useGameState } from '../context';
 
 const SelectGame = (): JSX.Element => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import FillableImage from './FillableImage';
 import StatesQuestions from './StatesQuestions';
@@ -29,14 +29,13 @@ const Quiz = ({ mapsrc }: QProps) => {
       setScore(score + 1);
       newFills[index].colour = CORRECT_COLOUR;
     } else {
+      const { name, capital } = states[index];
+
       const bad = [
         ...badAnswers,
         {
           answer,
-          correct:
-            answerType === 'capitals'
-              ? `${states[index].capital}, ${states[index].name}`
-              : states[index].name,
+          correct: answerType === 'capitals' ? `${capital}, ${name}` : name,
         },
       ];
 
@@ -61,6 +60,7 @@ const Quiz = ({ mapsrc }: QProps) => {
   return (
     <div className="quiz-holder">
       <FillableImage src={mapsrc} fills={fills} />
+
       <div className="questions-score">
         <StatesQuestions
           answers={states.map(({ name, capital }) =>

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { SELECTION, useGameState } from '../context';
 
 const GameComplete = (): JSX.Element => {
